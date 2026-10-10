@@ -20,5 +20,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('', views.home)
+    path('', views.home, name='nucleo-inicial'),
+    path('criar', views.tela_criar, name='nucleo-criar'),
+    path('salvar', views.salvar, name='nucleo-salvar'),
 ]
