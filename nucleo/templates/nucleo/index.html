@@ -15,7 +15,7 @@
 
     <div class="container">
         <h1>Lista de Colaboradores</h1>
-        <a href="{% url 'nucleo-criar' %}">Adicionar Colaborador</a>
+        <input type="button" value="Cadastrar colaborador" onclick="window.location.href='{% url 'nucleo-criar' %}'" style="background-color: green; color: white;">
         <br/>
         <table>
             <thead>
@@ -32,8 +32,8 @@
                         <td>{{ colaborador.id }}</td>
                         <td>{{ colaborador.nome }}</td>
                         <td>{{ colaborador.telefone }}</td>
-                        <td><a href="{% url 'nucleo-editar' colaborador.id %}">Editar</a></td>
-                        <td><a href="{% url 'nucleo-excluir' colaborador.id %}">Excluir</a></td>
+                        <td><input type="button" value="Editar" onclick="window.location.href='{% url 'nucleo-editar' colaborador.id %}'" style="background-color: aqua; color: black;"></td>
+                        <td><input type="button" value="Excluir" onclick="window.location.href='{% url 'nucleo-excluir' colaborador.id %}'" style="background-color: maroon; color: white;"></td>
                     </tr>
                 {% empty %}
                     <tr>
