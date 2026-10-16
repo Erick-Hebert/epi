@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from nucleo.models import Colaborador
+from django.contrib import messages
 
 def home(req):
     pesquisa = req.GET.get('pesquisa', '').strip()
@@ -26,6 +27,7 @@ def salvar(req):
         nome=nome,
         telefone=telefone
     )
+    messages.success(req, "Cadastrado com sucesso!")
     return redirect('nucleo-inicial')
 
 
@@ -38,6 +40,7 @@ def editar(req, id):
             colaborador.nome = nome
             colaborador.telefone = req.POST.get('telefone')
             colaborador.save()
+            messages.success(req, "Editado com sucesso!")
             return redirect('nucleo-inicial')
 
     return render(req, 'nucleo/forms/editar.html', {
@@ -49,6 +52,7 @@ def excluir(req, id):
 
     if req.method == 'POST':
         colaborador.delete()
+        messages.success(req, "Deletado com sucesso!")
         return redirect('nucleo-inicial')
 
     return render(req, 'nucleo/forms/excluir.html', {

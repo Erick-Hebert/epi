@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    
+    {% if messages %}
+        <div class="msg-toast-container">
+            {% for message in messages %}
+            <div class="msg-toast {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% include 'nucleo/partials/header.html' %}
     <div class="app-layout">
         {% include 'nucleo/partials/sidebar.html' %}

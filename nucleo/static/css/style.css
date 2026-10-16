@@ -82,3 +82,28 @@ button, input { font: inherit; }
     .profile { gap: 5px; }
     .profile img { width: 27px; }
 }
+
+.msg-toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.msg-toast {
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  animation: msg-toast-fade 1s ease 1s forwards;
+}
+
+.msg-toast.success { background: #2e7d32; }
+.msg-toast.error   { background: #c62828; }
+
+@keyframes msg-toast-fade {
+  from { opacity: 1; }
+  to   { opacity: 0; visibility: hidden; }
+}
