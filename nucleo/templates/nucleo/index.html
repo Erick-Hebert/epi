@@ -33,6 +33,7 @@
                         <td>{{ colaborador.nome }}</td>
                         <td>{{ colaborador.telefone }}</td>
                         <td><a href="{% url 'nucleo-editar' colaborador.id %}">Editar</a></td>
+                        <td><a href="{% url 'nucleo-excluir' colaborador.id %}">Excluir</a></td>
                     </tr>
                 {% empty %}
                     <tr>

@@ -29,7 +29,7 @@ def editar(req, id):
     colaborador = get_object_or_404(Colaborador, id=id)
 
     if req.method == 'POST':
-        nome = req.POST.get('nome', '').strip()
+        nome = req.POST.get('nome')
         if nome:
             colaborador.nome = nome
             colaborador.telefone = req.POST.get('telefone')
@@ -39,4 +39,14 @@ def editar(req, id):
     return render(req, 'nucleo/forms/editar.html', {
         'colaborador': colaborador,
     })
-    
+
+def excluir(req, id):
+    colaborador = get_object_or_404(Colaborador, id=id)
+
+    if req.method == 'POST':
+        colaborador.delete()
+        return redirect('nucleo-inicial')
+
+    return render(req, 'nucleo/forms/excluir.html', {
+        'colaborador': colaborador,
+    })

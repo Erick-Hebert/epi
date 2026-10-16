@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Colaborador</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Excluir Colaborador</h1>
+        <form action="{% url 'nucleo-excluir' colaborador.id %}" method="POST">
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                    <thead>
+                
+                    <tbody>
+                        <tr>
+                            <td>{{ colaborador.id }}</td>
+                            <td>{{ colaborador.nome }}</td>
+                            <td>{{ colaborador.telefone }}</td>
+                            <td><input type="submit" value="Excluir"/></td>
+                            <td><a href="{% url 'nucleo-inicial' %}">Cancelar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% csrf_token %}
+        </form>
+    </div>
+</body>
+</html>
