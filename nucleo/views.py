@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from nucleo.models import Colaborador
 
 def home(req):
+    pesquisa = req.GET.get('pesquisa', '').strip()
     colaboradores = Colaborador.objects.all()
+    if pesquisa:
+        colaboradores = colaboradores.filter(nome__icontains=pesquisa)
     return render(req, 'nucleo/index.html', {
         'colaboradores': colaboradores,
+        'pesquisa': pesquisa,
     })
 
 def tela_criar(req):

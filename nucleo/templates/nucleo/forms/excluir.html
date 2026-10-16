@@ -1,41 +1,13 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Colaborador</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <div class="container">
-        <h1>Excluir Colaborador</h1>
-        <form action="{% url 'nucleo-excluir' colaborador.id %}" method="POST">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Telefone</th>
-                            <th>Ações</th>
-                        </tr>
-                    <thead>
-                
-                    <tbody>
-                        <tr>
-                            <td>{{ colaborador.id }}</td>
-                            <td>{{ colaborador.nome }}</td>
-                            <td>{{ colaborador.telefone }}</td>
-                            <td><input type="submit" value="Excluir"/></td>
-                            <td><input type="button" value="Cancelar" onclick="window.location.href='{% url 'nucleo-inicial' %}'"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            {% csrf_token %}
-        </form>
-    </div>
-</body>
-</html>
+{% extends 'nucleo/base.html' %}
+{% block title %}Excluir colaborador{% endblock %}
+{% block content %}
+<section class="content-card form-card">
+    <h1>Excluir colaborador</h1>
+    <p class="description">Tem certeza de que deseja excluir este colaborador? Esta ação não pode ser desfeita.</p>
+    <div class="delete-summary"><strong>{{ colaborador.nome }}</strong><span>ID: {{ colaborador.id }}</span><span>Telefone: {{ colaborador.telefone|default:"—" }}</span></div>
+    <form method="post" action="{% url 'nucleo-excluir' colaborador.id %}">
+        {% csrf_token %}
+        <div class="form-actions"><a class="button button-secondary" href="{% url 'nucleo-inicial' %}">Cancelar</a><button class="button button-danger" type="submit">Confirmar exclusão</button></div>
+    </form>
+</section>
+{% endblock %}

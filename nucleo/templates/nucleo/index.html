@@ -1,64 +1,31 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Colaboradores</title>
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-
-<body>
-
-    {% include 'nucleo/partials/header.html' %}
-    <main>
-        <div class="colaborator_container">
-
-            <div class="container">
-                <h1>Colaboradores</h1>
-                <input type="button" value="Cadastrar colaborador"
-                    onclick="window.location.href='{% url 'nucleo-criar' %}'"
-                    style="background-color: green; color: white;">
-                <br />
-                <table class="colaborator_list">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Telefone</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for colaborador in colaboradores %}
-                        <tr>
-                            <td>{{ colaborador.id }}</td>
-                            <td>{{ colaborador.nome }}</td>
-                            <td>{{ colaborador.telefone }}</td>
-                            <td><input type="button" value="Editar"
-                                    onclick="window.location.href='{% url 'nucleo-editar' colaborador.id %}'"
-                                    style="background-color: aqua; color: black;"></td>
-                            <td><input type="button" value="Excluir"
-                                    onclick="window.location.href='{% url 'nucleo-excluir' colaborador.id %}'"
-                                    style="background-color: maroon; color: white;"></td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="4">
-                                Nenhum colaborador encontrado.
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-</body>
-
-</html>
+{% extends 'nucleo/base.html' %}
+{% block title %}Colaboradores{% endblock %}
+{% block content %}
+<section class="content-card">
+    <h1>Colaborador</h1>
+    <div class="toolbar">
+        <form class="search-form" method="get" action="{% url 'nucleo-inicial' %}">
+            <input type="search" name="pesquisa" value="{{ pesquisa }}" placeholder="Pesquisar pelo nome" aria-label="Pesquisar pelo nome">
+            <button class="search-button" type="submit" aria-label="Pesquisar">⌕</button>
+        </form>
+        <a class="button button-create" href="{% url 'nucleo-criar' %}">+ CRIAR</a>
+    </div>
+    <div class="table-scroll">
+        <table class="collaborator-table">
+            <thead><tr><th>ID</th><th>Nome</th><th>Telefone</th><th>Ação</th></tr></thead>
+            <tbody>
+                {% for colaborador in colaboradores %}
+                <tr>
+                    <td>{{ colaborador.id }}</td>
+                    <td>{{ colaborador.nome }}</td>
+                    <td>{{ colaborador.telefone|default:"—" }}</td>
+                    <td class="table-actions"><a class="button button-delete" href="{% url 'nucleo-excluir' colaborador.id %}">Deletar</a><a class="button button-edit" href="{% url 'nucleo-editar' colaborador.id %}">Editar</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="empty-state">Nenhum colaborador encontrado.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
