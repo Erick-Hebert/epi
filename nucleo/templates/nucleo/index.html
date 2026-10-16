@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,39 +15,50 @@
 <body>
 
     {% include 'nucleo/partials/header.html' %}
-    
-    <div class="container">
-        <h1>Lista de Colaboradores</h1>
-        <input type="button" value="Cadastrar colaborador" onclick="window.location.href='{% url 'nucleo-criar' %}'" style="background-color: green; color: white;">
-        <br/>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for colaborador in colaboradores %}
-                    <tr>
-                        <td>{{ colaborador.id }}</td>
-                        <td>{{ colaborador.nome }}</td>
-                        <td>{{ colaborador.telefone }}</td>
-                        <td><input type="button" value="Editar" onclick="window.location.href='{% url 'nucleo-editar' colaborador.id %}'" style="background-color: aqua; color: black;"></td>
-                        <td><input type="button" value="Excluir" onclick="window.location.href='{% url 'nucleo-excluir' colaborador.id %}'" style="background-color: maroon; color: white;"></td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="4">
-                            Nenhum colaborador encontrado.
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <main>
+        <div class="colaborator_container">
+
+            <div class="container">
+                <h1>Colaboradores</h1>
+                <input type="button" value="Cadastrar colaborador"
+                    onclick="window.location.href='{% url 'nucleo-criar' %}'"
+                    style="background-color: green; color: white;">
+                <br />
+                <table class="colaborator_list">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for colaborador in colaboradores %}
+                        <tr>
+                            <td>{{ colaborador.id }}</td>
+                            <td>{{ colaborador.nome }}</td>
+                            <td>{{ colaborador.telefone }}</td>
+                            <td><input type="button" value="Editar"
+                                    onclick="window.location.href='{% url 'nucleo-editar' colaborador.id %}'"
+                                    style="background-color: aqua; color: black;"></td>
+                            <td><input type="button" value="Excluir"
+                                    onclick="window.location.href='{% url 'nucleo-excluir' colaborador.id %}'"
+                                    style="background-color: maroon; color: white;"></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4">
+                                Nenhum colaborador encontrado.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
 </body>
+
 </html>
