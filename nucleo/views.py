@@ -58,3 +58,6 @@ def excluir(req, id):
     return render(req, 'nucleo/forms/excluir.html', {
         'colaborador': colaborador,
     })
+
+def equipments(req):
+    return render(req, 'nucleo/equipments.html')

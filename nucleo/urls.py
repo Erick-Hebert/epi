@@ -16,13 +16,18 @@ Including another URLconf
 """
 from . import views
 
+from django.views.generic import RedirectView
 from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('', views.home, name='nucleo-inicial'),
-    path('criar', views.tela_criar, name='nucleo-criar'),
-    path('salvar', views.salvar, name='nucleo-salvar'),
-    path('Editar/<int:id>', views.editar, name='nucleo-editar'),
-    path('Exluir/<int:id>', views.excluir, name='nucleo-excluir'),
+    path('', RedirectView.as_view(url='colaborators')),
+
+    path('colaborators', views.home, name='nucleo-inicial'),
+    path('colaborator/criar', views.tela_criar, name='nucleo-criar'),
+    path('colaborator/salvar', views.salvar, name='nucleo-salvar'),
+    path('colaborator/editar/<int:id>', views.editar, name='nucleo-editar'),
+    path('colaborator/excluir/<int:id>', views.excluir, name='nucleo-excluir'),
+
+    path('equipments', views.equipments, name='equipments-inicial')
 ]
