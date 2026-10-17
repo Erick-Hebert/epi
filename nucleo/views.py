@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from nucleo.models import Colaborador
+from nucleo.models import Colaborador, Equipamentos
 from django.contrib import messages
 
 def home(req):
@@ -59,5 +59,14 @@ def excluir(req, id):
         'colaborador': colaborador,
     })
 
+# TERMINAR
 def equipments(req):
-    return render(req, 'nucleo/equipments.html')
+    pesquisa = req.GET.get('pesquisa', '').strip()
+    equipamentos = Equipamentos.objects.all()
+    
+    if pesquisa:
+        colaboradores = colaboradores.filter(nome__icontains=pesquisa)
+    return render(req, 'nucleo/equipments.html', {
+        'equipamentos': equipamentos,
+        'pesquisa': pesquisa,
+    })
