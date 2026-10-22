@@ -41,7 +41,7 @@ class Equipamentos(models.Model):
        ('INATIVO', 'Inativo'),  
     ]
 
-    tipo = models.ForeignKey(TipoEquipamento, on_delete=models.PROTECT, related_name='equipamentos')
+    tipo = models.ForeignKey(TipoEquipamento, on_delete=models.PROTECT, related_name='equipamentos', null=False, blank=False)
     codigo_patrimonio = models.CharField(max_length=30, null=False)
     situacao = models.CharField(max_length=30, null=False, choices=SITUACAO_CHOICES, default='DISPONIVEL', blank=False)
 
