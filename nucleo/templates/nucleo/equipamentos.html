@@ -22,7 +22,7 @@
                     <td>{{ equipamento.quantidade }}</td>
                     <td>{{ equipamento.categoria }}</td>
                     <td>{{ equipamento.descricao }}</td>
-                    <td class="table-actions"><a class="button button-delete" href="{% url 'equipamentos-excluir' equipamento.id %}">Deletar</a><a class="button button-edit" href="{% url 'nucleo-editar' colaborador.id %}">Editar</a></td>
+                    <td class="table-actions"><a class="button button-delete" href="{% url 'equipamentos-excluir' equipamento.id %}">Deletar</a><a class="button button-edit" href="{% url 'equipamentos-editar' equipamento.id %}">Editar</a></td>
                 </tr>
                 {% empty %}
                 <tr><td colspan="5" class="empty-state">Nenhum equipamento encontrado.</td></tr>

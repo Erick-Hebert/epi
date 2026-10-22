@@ -32,6 +32,6 @@ urlpatterns = [
     path('equipamentos', views.equipamentos, name='equipamentos-inicial'),
     path('equipamentos/criar', views.criar_equipamento, name='equipamentos-criar'),
     path('equipamentos/salvar', views.salvar_equipamento, name='equipamentos-salvar'),
-    path('equipamentos/editar', views.editar_equipamento, name='equipamentos-editar'),
-    path('equipamentos/excluir', views.excluir_equipamento, name='equipamentos-excluir'),
+    path('equipamentos/editar/<int:id>', views.editar_equipamento, name='equipamentos-editar'),
+    path('equipamentos/excluir/<int:id>', views.excluir_equipamento, name='equipamentos-excluir'),
 ]

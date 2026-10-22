@@ -77,10 +77,27 @@ def criar_equipamento(req):
     return render(req, 'nucleo/forms/equipamentos/criar_equipamento.html')
 
 def salvar_equipamento(req):
+    nome = req.POST.get('nome')
+
+    if nome is None:
+        return redirect('equipamentos-criar')
+
+    quantidade = req.POST.get('quantidade')
+    categoria = req.POST.get('categoria')
+    descricao = req.POST.get('descricao')
+
+    TipoEquipamento.objects.create(
+        nome=nome,
+        quantidade=quantidade,
+        categoria=categoria,
+        descricao=descricao
+    )
+    messages.success(req, "Cadastrado com sucesso!")
+
     return redirect('equipamentos-inicial')
 
-def editar_equipamento(req):
+def editar_equipamento(req, id):
     return render(req, 'nucleo/forms/equipamentos/editar_equipamento.html')
 
-def excluir_equipamento(req):
+def excluir_equipamento(req, id):
     return render(req, 'nucleo/forms/equipamentos/excluir_equipamento.html')
