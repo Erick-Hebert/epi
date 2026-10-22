@@ -4,11 +4,11 @@
 <section class="content-card">
     <h1>Equipamentos</h1>
     <div class="toolbar">
-        <form class="search-form" method="get" action="{% url 'nucleo-inicial' %}">
+        <form class="search-form" method="get" action="{% url 'equipamentos-inicial' %}">
             <input type="search" name="pesquisa" value="{{ pesquisa }}" placeholder="Pesquisar pelo nome" aria-label="Pesquisar pelo nome">
             <button class="search-button" type="submit" aria-label="Pesquisar">⌕</button>
         </form>
-        <a class="button button-create" href="{% url 'nucleo-criar' %}">+ CRIAR</a>
+        <a class="button button-create" href="{% url 'equipamentos-criar' %}">+ CRIAR</a>
     </div>
 
     <div class="table-scroll">

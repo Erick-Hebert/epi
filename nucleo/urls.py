@@ -29,5 +29,9 @@ urlpatterns = [
     path('colaborator/editar/<int:id>', views.editar, name='nucleo-editar'),
     path('colaborator/excluir/<int:id>', views.excluir, name='nucleo-excluir'),
 
-    path('equipments', views.equipments, name='equipments-inicial')
+    path('equipamentos', views.equipamentos, name='equipamentos-inicial'),
+    path('equipamentos/criar', views.criar_equipamento, name='equipamentos-criar'),
+    path('equipamentos/salvar', views.salvar_equipamento, name='equipamentos-salvar'),
+    path('equipamentos/editar', views.editar_equipamento, name='equipamentos-editar'),
+    path('equipamentos/excluir', views.excluir_equipamento, name='equipamentos-excluir'),
 ]

@@ -23,7 +23,7 @@ def salvar(req):
 
     telefone = req.POST.get('telefone')
 
-    colaborador = Colaborador.objects.create(
+    Colaborador.objects.create(
         nome=nome,
         telefone=telefone
     )
@@ -60,13 +60,25 @@ def excluir(req, id):
     })
 
 # TERMINAR
-def equipments(req):
+def equipamentos(req):
     pesquisa = req.GET.get('pesquisa', '').strip()
     equipamentos = Equipamentos.objects.all()
     
     if pesquisa:
         colaboradores = colaboradores.filter(nome__icontains=pesquisa)
-    return render(req, 'nucleo/equipments.html', {
+    return render(req, 'nucleo/equipamentos.html', {
         'equipamentos': equipamentos,
         'pesquisa': pesquisa,
     })
+
+def criar_equipamento(req):
+    return render(req, 'nucleo/forms/equipamentos/criar_equipamento.html')
+
+def salvar_equipamento(req):
+    return redirect('equipamentos-inicial')
+
+def editar_equipamento(req):
+    return render(req, 'nucleo/forms/equipamentos/editar_equipamento.html')
+
+def excluir_equipamento(req):
+    return render(req, 'nucleo/forms/equipamentos/excluir_equipamento.html')
