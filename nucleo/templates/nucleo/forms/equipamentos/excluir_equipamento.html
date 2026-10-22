@@ -1,0 +1,13 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Excluir equipamento{% endblock %}
+{% block content %}
+<section class="content-card form-card">
+    <h1>Excluir equipamento</h1>
+    <p class="description">Tem certeza de que deseja excluir este equipamento? Esta ação não pode ser desfeita.</p>
+    <div class="delete-summary"><strong>{{ equipamento.nome }}</strong><span>ID: {{ equipamento.id }}</span><span>Quantidade: {{ equipamento.quantidade }}</span></div>
+    <form method="post" action="{% url 'equipamentos-excluir' equipamento.id %}">
+        {% csrf_token %}
+        <div class="form-actions"><a class="button button-secondary" href="{% url 'equipamentos-inicial' %}">Cancelar</a><button class="button button-danger" type="submit">Confirmar exclusão</button></div>
+    </form>
+</section>
+{% endblock %}

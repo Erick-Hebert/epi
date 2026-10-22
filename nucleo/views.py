@@ -100,4 +100,13 @@ def editar_equipamento(req, id):
     return render(req, 'nucleo/forms/equipamentos/editar_equipamento.html')
 
 def excluir_equipamento(req, id):
-    return render(req, 'nucleo/forms/equipamentos/excluir_equipamento.html')
+    equipamento = get_object_or_404(TipoEquipamento, id=id)
+    
+    if req.method == 'POST':
+        equipamento.delete()
+        messages.success(req, "Deletado com sucesso!")
+        return redirect('equipamentos-inicial')
+
+    return render(req, 'nucleo/forms/equipamentos/excluir_equipamento.html', {
+        'equipamento': equipamento,
+    })
