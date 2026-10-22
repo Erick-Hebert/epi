@@ -13,17 +13,19 @@
 
     <div class="table-scroll">
         <table class="collaborator-table">
-            <thead><tr><th>ID</th><th>Nome</th><th>Telefone</th><th>Ação</th></tr></thead>
+            <thead><tr><th>ID</th><th>Nome</th><th>Quantidade</th><th>Categoria</th><th>Descrição</th></tr></thead>
             <tbody>
-                {% for colaborador in colaboradores %}
+                {% for equipamento in tipos_equipamento %}
                 <tr>
-                    <td>{{ colaborador.id }}</td>
-                    <td>{{ colaborador.nome }}</td>
-                    <td>{{ colaborador.telefone|default:"—" }}</td>
-                    <td class="table-actions"><a class="button button-delete" href="{% url 'nucleo-excluir' colaborador.id %}">Deletar</a><a class="button button-edit" href="{% url 'nucleo-editar' colaborador.id %}">Editar</a></td>
+                    <td>{{ equipamento.id }}</td>
+                    <td>{{ equipamento.nome }}</td>
+                    <td>{{ equipamento.quantidade }}</td>
+                    <td>{{ equipamento.categoria }}</td>
+                    <td>{{ equipamento.descricao }}</td>
+                    <td class="table-actions"><a class="button button-delete" href="{% url 'equipamentos-excluir' equipamento.id %}">Deletar</a><a class="button button-edit" href="{% url 'nucleo-editar' colaborador.id %}">Editar</a></td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="4" class="empty-state">Nenhum colaborador encontrado.</td></tr>
+                <tr><td colspan="5" class="empty-state">Nenhum equipamento encontrado.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
