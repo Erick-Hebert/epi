@@ -2,13 +2,13 @@
     <nav class="sidebar-menu">
         <div class="menu-group">
             <h2>Cadastros</h2>
-            <a href="{% url 'nucleo-inicial' %}" class="menu-link active">Colaborador</a>
-            <a href="{% url 'equipments-inicial' %}" class="menu-link">Equipamentos</a>
+            <a href="{% url 'nucleo-inicial' %}" class="menu-link {% if request.resolver_match.url_name|slice:':7' == 'nucleo-' %}active{% endif %}">Colaborador</a>
+            <a href="{% url 'equipments-inicial' %}" class="menu-link {% if request.resolver_match.url_name == 'equipments-inicial' %}active{% endif %}">Equipamentos</a>
         </div>
 
         <div class="menu-group">
             <h2>Ação</h2>
-            <a class="menu-link">Controle de EPI</a>
+            <a href="{% url 'epi-controle' %}" class="menu-link {% if request.resolver_match.url_name|slice:':4' == 'epi-' %}active{% endif %}">Controle de EPI</a>
         </div>
 
         <div class="menu-group">

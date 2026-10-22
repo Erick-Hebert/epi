@@ -29,5 +29,9 @@ urlpatterns = [
     path('colaborator/editar/<int:id>', views.editar, name='nucleo-editar'),
     path('colaborator/excluir/<int:id>', views.excluir, name='nucleo-excluir'),
 
-    path('equipments', views.equipments, name='equipments-inicial')
+    path('equipments', views.equipments, name='equipments-inicial'),
+
+    path('controle-epi', views.controle_epi, name='epi-controle'),
+    path('controle-epi/criar', views.emprestimo_criar, name='epi-criar'),
+    path('controle-epi/editar/<int:id>', views.emprestimo_editar, name='epi-editar'),
 ]

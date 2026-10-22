@@ -1,0 +1,62 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Controle de EPI{% endblock %}
+{% block content %}
+<section class="content-card">
+    <h1>Controle de EPI</h1>
+
+    <form class="filter-card" method="get" action="{% url 'epi-controle' %}">
+        <div class="form-field">
+            <label for="equipamento">Equipamento</label>
+            <input id="equipamento" name="equipamento" type="text" value="{{ equipamento }}">
+        </div>
+        <div class="form-field">
+            <label for="colaborador">Colaborador</label>
+            <input id="colaborador" name="colaborador" type="text" value="{{ colaborador }}">
+        </div>
+        <div class="form-field">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="">Todos</option>
+                {% for valor, rotulo in status_choices %}
+                <option value="{{ valor }}" {% if valor == status %}selected{% endif %}>{{ rotulo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="button button-search" type="submit">Pesquisar</button>
+        <a class="filter-clear" href="{% url 'epi-controle' %}">Limpar filtros</a>
+    </form>
+
+    <div class="toolbar toolbar-end">
+        <a class="button button-create" href="{% url 'epi-criar' %}">+ CRIAR</a>
+    </div>
+
+    <div class="table-scroll">
+        <table class="collaborator-table">
+            <thead>
+                <tr>
+                    <th>Data do empréstimo</th>
+                    <th>Data prevista da devolução</th>
+                    <th>Status</th>
+                    <th>Equipamento</th>
+                    <th>Colaborador</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emprestimo in emprestimos %}
+                <tr>
+                    <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao|date:"d/m/Y" }}</td>
+                    <td><span class="status-badge status-{{ emprestimo.status|lower }}">{{ emprestimo.get_status_display }}</span></td>
+                    <td>{{ emprestimo.equipamento.nome }}</td>
+                    <td>{{ emprestimo.colaborador.nome }}</td>
+                    <td class="table-actions"><a class="button button-edit" href="{% url 'epi-editar' emprestimo.id %}">Editar</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="empty-state">Nenhum empréstimo encontrado.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

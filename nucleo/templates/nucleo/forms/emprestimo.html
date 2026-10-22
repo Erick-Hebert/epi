@@ -1,0 +1,19 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block content %}
+<section class="content-card form-card">
+    <h1>{{ titulo }}</h1>
+    <p class="description">Preencha os dados do empréstimo.</p>
+    <form class="collaborator-form" method="post">
+        {% csrf_token %}
+        {% for campo in form %}
+        <div class="form-field">
+            <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+            {{ campo }}
+            {% for erro in campo.errors %}<span class="field-error">{{ erro }}</span>{% endfor %}
+        </div>
+        {% endfor %}
+        <div class="form-actions"><a class="button button-secondary" href="{% url 'epi-controle' %}">Cancelar</a><button class="button button-primary" type="submit">Salvar</button></div>
+    </form>
+</section>
+{% endblock %}

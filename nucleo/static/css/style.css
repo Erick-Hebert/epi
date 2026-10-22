@@ -65,6 +65,20 @@ button, input { font: inherit; }
 .delete-summary { display: flex; flex-direction: column; gap: 9px; padding: 20px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 24px; }
 .delete-summary span { color: #667181; font-size: 14px; }
 
+/* Controle de EPI: filtro, status e select */
+.filter-card { display: flex; flex-direction: column; gap: 16px; max-width: 520px; margin: 0 auto 26px; padding: 24px; border: 1px solid #b8c2d0; border-radius: 18px; }
+.form-field select { width: 100%; padding: 12px; border: 1px solid #bdc8d6; border-radius: 5px; background: #fff; outline-color: #8fb5ec; }
+.form-field input[type="date"] { font-family: inherit; }
+.button-search { background: #eaf2ff; color: #2759a2; border-color: var(--blue-border); padding: 11px 14px; }
+.button-search:hover { background: var(--blue); }
+.filter-clear { align-self: center; font-size: 13px; color: #5d6877; text-decoration: underline; }
+.toolbar-end { justify-content: flex-end; }
+.status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+.status-emprestado { background: #fff9e9; color: #8a661c; }
+.status-devolvido { background: #eef9f0; color: #2d7d46; }
+.status-atrasado { background: #fff3f3; color: var(--red); }
+.field-error { color: var(--red); font-size: 13px; }
+
 /* Ajustes para telas menores */
 @media (max-width: 700px) {
     .sidebar { width: 135px; }
