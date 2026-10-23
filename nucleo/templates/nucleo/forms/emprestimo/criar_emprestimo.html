@@ -1,0 +1,30 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Criar Emprestimo{% endblock %}
+{% block content %}
+<section class="content-card form-card">
+    <h1>Criar Emprestimo</h1>
+    <p class="description">Preencha os dados do novo emprestimo.</p>
+    <form class="collaborator-form" action="{% url 'emprestimo-salvar' %}" method="post">
+         {% csrf_token %}
+         <div class="form-field"><label for="Colaborador">Colaborador</label><input id="nome" name="nome" type="text" maxlength="30" required></div required>
+         <div class="form-field"><label for="Equipamento">Equipamento</label><input id="descricao" name="descricao" maxlength="100"></div required>
+
+         <div class="form-field">
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria">
+               <option value="">Escolher uma categoria</option selected disabled hidden>
+               <option value="CABECA">Cabeça</option>
+               <option value="FACE">Face</option>
+               <option value="AUDITIVO">Auditivo</option>
+               <option value="RESPIRATORIO">Respiratório</option>
+               <option value="TRONCO">Tronco</option>
+               <option value="MEMBROS_SUPERIORES">Membros superiores</option>
+               <option value="MEMBROS_INFERIORES">Membros inferiores</option>
+               <option value="QUEDAS">Quedas</option>
+            </select required>
+         </div>
+
+        <div class="form-actions"><a class="button button-secondary" href="{% url 'equipamentos-inicial' %}">Cancelar</a><button class="button button-primary" type="submit">Salvar</button></div>
+    </form>
+</section>
+{% endblock %}

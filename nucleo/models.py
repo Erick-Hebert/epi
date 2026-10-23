@@ -45,3 +45,22 @@ class Equipamentos(models.Model):
     situacao = models.CharField(max_length=30, null=False, choices=SITUACAO_CHOICES, default='DISPONIVEL', blank=False)
 
 # ----- EQUIPAMENTOS -----
+
+class Emprestimo(models.Model):
+    CONDICAO_CHOICES = [
+        ('EMPRESTADO', 'Emprestado'),
+        ('FORNECIDO', 'Fornecido'),
+        ('DEVOLVIDO', 'Devolvido'),
+        ('DANIFICADO', 'Danificado'),
+        ('PERDIDO', 'Perdido'),]
+    OPCOES = ['DANIFICADO', 'PERDIDO', 'DEVOLVIDO']
+    colaborador = models.ForeignKey(Colaborador,on_delete=models.PROTECT, related_name='emprestimos')
+    equipamento = models.ForeignKey(Equipamentos,on_delete=models.PROTECT, related_name='emprestimos')
+    data_emprestimo = models.DateField()
+    data_devolucao_prevista = models.DateField()
+    estado_equipamento = models.CharField(max_length=20, choices=CONDICAO_CHOICES, default='EMPRESTADO')
+    condicao_equipamento = models.CharField(max_length=30, null=False, blank=False)
+    data_devolucao = models.DateField(null=True, blank=True)
+    observacao = models.CharField(max_length=30, blank=True)
+        
+    

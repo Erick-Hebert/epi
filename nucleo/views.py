@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from nucleo.models import Colaborador, Equipamentos, TipoEquipamento
+from nucleo.models import Colaborador, Equipamentos, TipoEquipamento, Emprestimo
 from django.contrib import messages
 
 def home(req):
@@ -123,3 +123,15 @@ def excluir_equipamento(req, id):
     return render(req, 'nucleo/forms/equipamentos/excluir_equipamento.html', {
         'equipamento': equipamento,
     })
+    
+    
+def emprestimos(req):
+    lista = Emprestimo.objects.all()
+
+    return render(req, 'nucleo/emprestimo.html', {'emprestimo' : lista,})
+
+def criar_emprestimo(req):
+    return render(req, 'nucleo/forms/emprestimo/criar_emprestimo.html')
+
+def editar_emprestimo(req):
+    ...

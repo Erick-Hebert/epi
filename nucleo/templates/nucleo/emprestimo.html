@@ -1,0 +1,18 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Emprestimo{% endblock %}
+{% block content %}
+<section class="content-card">
+    <h1>Emprestimos</h1>
+    <div class="toolbar">
+        <form class="search-form" method="get" action="">
+            <input type="search" name="pesquisa" value="{{ pesquisa }}" placeholder="Pesquisar pelo nome" aria-label="Pesquisar pelo nome">
+            <button class="search-button" type="submit" aria-label="Pesquisar">⌕</button>
+        </form>
+        <a class="button button-create" href="{% url 'emprestimo-criar' %}">+ CRIAR</a>
+    </div>
+
+    <div class="table-scroll">
+        {% include "nucleo/forms/emprestimo/lista_emprestimo.html" %}
+    </div>
+</section>
+{% endblock %}
