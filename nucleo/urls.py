@@ -36,4 +36,9 @@ urlpatterns = [
     path('equipamentos/excluir/<int:id>', views.excluir_equipamento, name='equipamentos-excluir'),
 
     path('equipamentos/registros/<int:id>', views.equipamentos_registros, name='equipamentos-registros-inicial'),
+    path('equipamentos/registros/criar<int:id>', views.criar_equipamento_registro, name='equipamentos-registros-criar'),
+    path('equipamentos/registros/salvar<int:id>', views.salvar_equipamento_registro, name='equipamentos-registros-salvar'),
+    path('equipamentos/registros/editar<int:id>', views.editar_equipamento_registro, name='equipamentos-registros-editar'),
+    path('equipamentos/registros/excluir<int:id>', views.excluir_equipamento_registro, name='equipamentos-registros-excluir'),
+
 ]

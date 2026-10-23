@@ -137,3 +137,15 @@ def equipamentos_registros(req, id):
         'equipamentos_registros': equipamentos_registros,
         'pesquisa': pesquisa,
     })
+
+def criar_equipamento_registro(req, id):
+    pass
+
+def salvar_equipamento_registro(req, id):
+    pass
+
+def excluir_equipamento_registro(req, id):
+    pass
+
+def editar_equipamento_registro(req, id):
+    pass
