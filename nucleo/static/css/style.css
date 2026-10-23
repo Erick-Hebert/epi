@@ -233,3 +233,19 @@ button, input { font: inherit; }
         flex-wrap: wrap;
     }
 }
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+}
+
+.card-header a {
+  flex: 0;
+}
+
+.card-header h1 {
+  flex: 2;
+}

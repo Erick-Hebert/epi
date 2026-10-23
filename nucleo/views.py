@@ -124,7 +124,6 @@ def excluir_equipamento(req, id):
         'equipamento': equipamento,
     })
 
-    
 def emprestimos(req):
     lista = Emprestimo.objects.all()
 
@@ -215,3 +214,32 @@ def editar_emprestimo(req, id):
         'equipamentos': Equipamentos.objects.all(),
         'colaboradores': Colaborador.objects.all(),
     })
+
+# ----- REGISTROS DE EQUIPAMENTOS -----
+def equipamentos_registros(req, id):
+    equipamento = get_object_or_404(TipoEquipamento, id=id)
+    equipamentos_registros = Equipamentos.objects.filter(tipo=id)
+    pesquisa = req.GET.get('pesquisa', '').strip()
+
+    # Pesquisa por código de patrimonio
+    if pesquisa:
+        equipamentos_registros = equipamentos_registros.filter(codigo_patrimonio__icontains=pesquisa)
+    return render(req, 'nucleo/equipamentos_registros.html', {
+        'tipos_equipamento': equipamento,
+        'equipamentos_registros': equipamentos_registros,
+        'pesquisa': pesquisa,
+    })
+
+def criar_equipamento_registro(req, id):
+    pass
+
+def salvar_equipamento_registro(req, id):
+    pass
+
+def excluir_equipamento_registro(req, id):
+    pass
+
+def editar_equipamento_registro(req, id):
+    pass
+
+# ----- REGISTROS DE EQUIPAMENTOS -----
