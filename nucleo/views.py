@@ -123,7 +123,7 @@ def excluir_equipamento(req, id):
     return render(req, 'nucleo/forms/equipamentos/excluir_equipamento.html', {
         'equipamento': equipamento,
     })
-    
+
     
 def emprestimos(req):
     lista = Emprestimo.objects.all()
@@ -131,7 +131,87 @@ def emprestimos(req):
     return render(req, 'nucleo/emprestimo.html', {'emprestimo' : lista,})
 
 def criar_emprestimo(req):
-    return render(req, 'nucleo/forms/emprestimo/criar_emprestimo.html')
+    equipamentos = Equipamentos.objects.filter(situacao='DISPONIVEL')
+    colaboradores = Colaborador.objects.all()
 
-def editar_emprestimo(req):
-    ...
+    if req.method == 'POST':
+        Emprestimo.objects.create(
+            equipamento_id=req.POST['equipamento'],
+            colaborador_id=req.POST['colaborador'],
+            data_emprestimo=req.POST['data_emprestimo'],
+            data_devolucao_prevista=req.POST['data_devolucao_prevista'],
+            estado_equipamento=req.POST['status'],
+            condicao_equipamento=req.POST['condicao'],
+            data_devolucao=req.POST.get('data_devolucao') or None,
+            observacao=req.POST.get('observacao', ''),
+        )
+
+        messages.success(req, 'Empréstimo cadastrado com sucesso!')
+        return redirect('emprestimo-inicial')
+
+    return render(req, 'nucleo/forms/emprestimo/criar_emprestimo.html', {
+        'equipamentos': equipamentos,
+        'colaboradores': colaboradores,
+    })
+    
+def salvar_emprestimo(request):
+    if request.method == 'POST':
+        equipamento_id = request.POST.get('equipamento')
+        nome_responsavel = request.POST.get('nome_responsavel')
+        data_prevista = request.POST.get('data_prevista_devolucao')
+
+        equipamento = get_object_or_404(
+            Equipamentos.objects.select_for_update(),
+            pk=equipamento_id
+        )
+
+        if equipamento.situacao != 'DISPONIVEL':
+            messages.error(request, 'Equipamento indisponível para empréstimo.')
+            return redirect('salvar_emprestimo')
+
+        if not nome_responsavel or not data_prevista:
+            messages.error(request, 'Preencha todos os campos.')
+            return redirect('salvar_emprestimo')
+
+        Emprestimo.objects.create(
+            equipamento=equipamento,
+            nome_responsavel=nome_responsavel,
+            data_prevista_devolucao=data_prevista
+        )
+
+        equipamento.situacao = 'EM_USO'
+        equipamento.save(update_fields=['situacao'])
+
+        messages.success(request, 'Empréstimo registrado com sucesso!')
+        return redirect('salvar_emprestimo')
+
+    equipamentos = Equipamentos.objects.filter(
+        situacao='DISPONIVEL'
+    )
+
+    return render(request, 'emprestimos/formulario.html', {
+        'equipamentos': equipamentos
+    })
+
+def editar_emprestimo(req, id):
+    emprestimo = get_object_or_404(Emprestimo, id=id)
+
+    if req.method == 'POST':
+        emprestimo.equipamento_id = req.POST['equipamento']
+        emprestimo.colaborador_id = req.POST['colaborador']
+        emprestimo.data_emprestimo = req.POST['data_emprestimo']
+        emprestimo.data_devolucao_prevista = req.POST['data_devolucao_prevista']
+        emprestimo.estado_equipamento = req.POST['status']
+        emprestimo.condicao_equipamento = req.POST['condicao']
+        emprestimo.data_devolucao = req.POST.get('data_devolucao') or None
+        emprestimo.observacao = req.POST.get('observacao', '')
+
+        emprestimo.save()
+        messages.success(req, 'Empréstimo atualizado!')
+        return redirect('emprestimo-inicial')
+
+    return render(req, 'nucleo/forms/emprestimo/editar_emprestimo.html', {
+        'emprestimo': emprestimo,
+        'equipamentos': Equipamentos.objects.all(),
+        'colaboradores': Colaborador.objects.all(),
+    })

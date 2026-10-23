@@ -107,3 +107,129 @@ button, input { font: inherit; }
   from { opacity: 1; }
   to   { opacity: 0; visibility: hidden; }
 }
+
+/* Formulário de empréstimo */
+.container-emprestimo {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.container-emprestimo h1 {
+    margin: 0 0 28px;
+    color: #24344d;
+    font-size: 30px;
+}
+
+/* Cada campo fica em sua própria linha */
+.container-emprestimo .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.container-emprestimo .campo label {
+    display: block;
+    margin: 0;
+    color: #334155;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Inputs, seletores e observações */
+.container-emprestimo .campo input,
+.container-emprestimo .campo select,
+.container-emprestimo .campo textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #1e293b;
+    font: inherit;
+    font-size: 15px;
+}
+
+.container-emprestimo .campo input,
+.container-emprestimo .campo select {
+    min-height: 44px;
+}
+
+.container-emprestimo .campo textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.container-emprestimo .campo input:focus,
+.container-emprestimo .campo select:focus,
+.container-emprestimo .campo textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Botões */
+.container-emprestimo .acoes-formulario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.container-emprestimo .botao-salvar,
+.container-emprestimo .botao-voltar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 7px;
+    font: inherit;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.container-emprestimo .botao-salvar {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.container-emprestimo .botao-salvar:hover {
+    background: #1d4ed8;
+}
+
+.container-emprestimo .botao-voltar {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.container-emprestimo .botao-voltar:hover {
+    background: #cbd5e1;
+}
+
+/* Ajuste para telas pequenas */
+@media (max-width: 600px) {
+    .container-emprestimo {
+        margin: 20px 12px;
+        padding: 20px;
+    }
+
+    .container-emprestimo h1 {
+        font-size: 25px;
+    }
+
+    .container-emprestimo .acoes-formulario {
+        flex-wrap: wrap;
+    }
+}

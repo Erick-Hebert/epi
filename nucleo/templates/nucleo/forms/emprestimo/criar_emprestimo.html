@@ -1,30 +1,181 @@
 {% extends 'nucleo/base.html' %}
-{% block title %}Criar Emprestimo{% endblock %}
+{% load static %}
+
+{% block title %}Criar Empréstimo{% endblock %}
+
 {% block content %}
-<section class="content-card form-card">
-    <h1>Criar Emprestimo</h1>
-    <p class="description">Preencha os dados do novo emprestimo.</p>
-    <form class="collaborator-form" action="{% url 'emprestimo-salvar' %}" method="post">
-         {% csrf_token %}
-         <div class="form-field"><label for="Colaborador">Colaborador</label><input id="nome" name="nome" type="text" maxlength="30" required></div required>
-         <div class="form-field"><label for="Equipamento">Equipamento</label><input id="descricao" name="descricao" maxlength="100"></div required>
 
-         <div class="form-field">
-            <label for="categoria">Categoria</label>
-            <select name="categoria" id="categoria">
-               <option value="">Escolher uma categoria</option selected disabled hidden>
-               <option value="CABECA">Cabeça</option>
-               <option value="FACE">Face</option>
-               <option value="AUDITIVO">Auditivo</option>
-               <option value="RESPIRATORIO">Respiratório</option>
-               <option value="TRONCO">Tronco</option>
-               <option value="MEMBROS_SUPERIORES">Membros superiores</option>
-               <option value="MEMBROS_INFERIORES">Membros inferiores</option>
-               <option value="QUEDAS">Quedas</option>
-            </select required>
-         </div>
+<div class="container-emprestimo">
 
-        <div class="form-actions"><a class="button button-secondary" href="{% url 'equipamentos-inicial' %}">Cancelar</a><button class="button button-primary" type="submit">Salvar</button></div>
+    <div class="cabecalho-emprestimo">
+        <h1>Criar Empréstimo</h1>
+        <p>Preencha os dados para registrar um novo empréstimo de EPI.</p>
+    </div>
+
+    <form method="POST" class="form-emprestimo">
+        {% csrf_token %}
+
+        <!-- Equipamento -->
+        <div class="campo">
+            <label for="equipamento">Equipamento</label>
+
+            <select id="equipamento" name="equipamento" required>
+                <option value="">Selecione um equipamento</option>
+
+                {% for e in equipamentos %}
+                    <option value="{{ e.id }}">
+                        {{ e.tipo.nome }} - {{ e.codigo_patrimonio }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Colaborador -->
+        <div class="campo">
+            <label for="colaborador">Colaborador</label>
+
+            <select id="colaborador" name="colaborador" required>
+                <option value="">Selecione um colaborador</option>
+
+                {% for c in colaboradores %}
+                    <option value="{{ c.id }}">
+                        {{ c.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Data do empréstimo -->
+        <div class="campo">
+            <label for="data_emprestimo">Data do empréstimo</label>
+
+            <input
+                type="date"
+                id="data_emprestimo"
+                name="data_emprestimo"
+                required
+            >
+        </div>
+
+        <!-- Data prevista -->
+        <div class="campo">
+            <label for="data_devolucao_prevista">
+                Data prevista para devolução
+            </label>
+
+            <input
+                type="date"
+                id="data_devolucao_prevista"
+                name="data_devolucao_prevista"
+                required
+            >
+        </div>
+
+        <!-- Estado do empréstimo -->
+        <div class="campo">
+            <label for="estado_equipamento">Estado do empréstimo</label>
+
+            <select
+                id="estado_equipamento"
+                name="estado_equipamento"
+                required
+            >
+                <option value="EMPRESTADO" selected>Emprestado</option>
+                <option value="FORNECIDO">Fornecido</option>
+                <option value="DEVOLVIDO">Devolvido</option>
+                <option value="DANIFICADO">Danificado</option>
+                <option value="PERDIDO">Perdido</option>
+            </select>
+        </div>
+
+        <!-- Campos exibidos conforme o estado -->
+        <div id="campos-finais" hidden>
+
+            <div class="campo">
+                <label for="condicao_equipamento">
+                    Condição do equipamento
+                </label>
+
+                <input
+                    type="text"
+                    id="condicao_equipamento"
+                    name="condicao_equipamento"
+                    maxlength="30"
+                    placeholder="Informe a condição do equipamento"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="data_devolucao">Data da devolução</label>
+
+                <input
+                    type="date"
+                    id="data_devolucao"
+                    name="data_devolucao"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="observacao">Observações</label>
+
+                <textarea
+                    id="observacao"
+                    name="observacao"
+                    rows="4"
+                    maxlength="30"
+                    placeholder="Digite uma observação (opcional)"
+                ></textarea>
+            </div>
+
+        </div>
+
+        <!-- Botões -->
+        <div class="acoes-formulario">
+            <button type="submit" class="botao-salvar">
+                Salvar empréstimo
+            </button>
+
+            <a
+                href="{% url 'emprestimo-inicial' %}"
+                class="botao-voltar"
+            >
+                Voltar
+            </a>
+        </div>
+
     </form>
-</section>
+</div>
+
+<!-- Controle de exibição dos campos -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const estado = document.getElementById('estado_equipamento');
+    const camposFinais = document.getElementById('campos-finais');
+    const condicao = document.getElementById('condicao_equipamento');
+    const dataDevolucao = document.getElementById('data_devolucao');
+
+    function atualizarCampos() {
+        const mostrar = [
+            'DEVOLVIDO',
+            'DANIFICADO',
+            'PERDIDO'
+        ].includes(estado.value);
+
+        camposFinais.hidden = !mostrar;
+
+        condicao.required = mostrar;
+        dataDevolucao.required = mostrar;
+
+        if (!mostrar) {
+            condicao.value = '';
+            dataDevolucao.value = '';
+        }
+    }
+
+    estado.addEventListener('change', atualizarCampos);
+
+    atualizarCampos();
+});
+</script>
+
 {% endblock %}

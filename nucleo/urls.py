@@ -35,6 +35,7 @@ urlpatterns = [
     path('equipamentos/editar/<int:id>', views.editar_equipamento, name='equipamentos-editar'),
     path('equipamentos/excluir/<int:id>', views.excluir_equipamento, name='equipamentos-excluir'),
     
+
     path('emprestimos', views.emprestimos, name='emprestimo-inicial'),
     path('emprestimo/criar', views.criar_emprestimo, name='emprestimo-criar'),
     path('emprestimos/editar/<int:id>', views.editar_emprestimo, name='emprestimo-editar'),
