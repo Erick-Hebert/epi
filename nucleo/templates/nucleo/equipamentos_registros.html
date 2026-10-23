@@ -1,0 +1,36 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Registros de {{ tipos_equipamento.nome }} {% endblock %}
+{% block content %}
+<section class="content-card">
+    <div class="card-header">
+        <a class="button button-secondary" href="{% url 'equipamentos-inicial' %}">Voltar</a>
+        <h1>Registros de {{ tipos_equipamento.nome }}</h1>
+    </div>
+    
+    <div class="toolbar">
+        <form class="search-form" method="get" action="{% url 'equipamentos-inicial' %}">
+            <input type="search" name="pesquisa" value="{{ pesquisa }}" placeholder="Pesquisar pelo nome" aria-label="Pesquisar pelo nome">
+            <button class="search-button" type="submit" aria-label="Pesquisar">⌕</button>
+        </form>
+        <a class="button button-create" href="{% url 'equipamentos-criar' %}">+ CRIAR</a>
+    </div>
+
+    <div class="table-scroll">
+        <table class="collaborator-table">
+            <thead><tr><th>ID</th><th>Código de Patrimônio</th><th>Situação</th><th>Ação</th></tr></thead>
+            <tbody>
+                {% for registros in equipamentos_registros %}
+                <tr class="row-button" data-id="{{ equipamento.id }}">
+                    <td>{{ registros.id }}</td>
+                    <td>{{ registros.codigo_patrimonio }}</td>
+                    <td>{{ registros.get_situacao_display }}</td>
+                    <td class="table-actions"><a class="button button-delete" href="{% url 'equipamentos-excluir' equipamento.id %}">Deletar</a><a class="button button-edit" href="{% url 'equipamentos-editar' equipamento.id %}">Editar</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="empty-state">Nenhum equipamento encontrado.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

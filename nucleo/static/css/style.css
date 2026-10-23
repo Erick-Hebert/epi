@@ -107,3 +107,19 @@ button, input { font: inherit; }
   from { opacity: 1; }
   to   { opacity: 0; visibility: hidden; }
 }
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+}
+
+.card-header a {
+  flex: 0;
+}
+
+.card-header h1 {
+  flex: 2;
+}

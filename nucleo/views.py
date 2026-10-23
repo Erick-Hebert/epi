@@ -123,3 +123,17 @@ def excluir_equipamento(req, id):
     return render(req, 'nucleo/forms/equipamentos/excluir_equipamento.html', {
         'equipamento': equipamento,
     })
+
+def equipamentos_registros(req, id):
+    equipamento = get_object_or_404(TipoEquipamento, id=id)
+    equipamentos_registros = Equipamentos.objects.filter(tipo=id)
+    pesquisa = req.GET.get('pesquisa', '').strip()
+
+    # Pesquisa por código de patrimonio
+    if pesquisa:
+        equipamentos_registros = equipamentos_registros.filter(codigo_patrimonio__icontains=pesquisa)
+    return render(req, 'nucleo/equipamentos_registros.html', {
+        'tipos_equipamento': equipamento,
+        'equipamentos_registros': equipamentos_registros,
+        'pesquisa': pesquisa,
+    })

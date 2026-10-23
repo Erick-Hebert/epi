@@ -16,7 +16,7 @@
             <thead><tr><th>ID</th><th>Nome</th><th>Quantidade</th><th>Categoria</th><th>Descrição</th><th>Ação</th></tr></thead>
             <tbody>
                 {% for equipamento in tipos_equipamento %}
-                <tr>
+                <tr class="row-button" data-id="{{ equipamento.id }}">
                     <td>{{ equipamento.id }}</td>
                     <td>{{ equipamento.nome }}</td>
                     <td>{{ equipamento.quantidade_total }}</td>
@@ -31,4 +31,14 @@
         </table>
     </div>
 </section>
+
+<script>
+    document.querySelectorAll('.row-button').forEach(element => {
+        element.addEventListener('click', function() {
+            const id = this.dataset.id;
+
+            window.location.href = `equipamentos/registros/${id}`
+        })
+    });
+</script>
 {% endblock %}
