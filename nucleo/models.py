@@ -24,7 +24,6 @@ class TipoEquipamento(models.Model):
     ]
 
     nome = models.CharField(max_length=30, null=False, blank=False)
-    quantidade = models.PositiveIntegerField(default=0, null=False, blank=False)
     descricao = models.CharField(max_length=100)
     categoria = models.CharField(max_length=30, null=False, choices=CATEGORIA_CHOICES, blank=False)
 

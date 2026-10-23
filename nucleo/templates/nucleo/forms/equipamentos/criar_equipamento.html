@@ -8,7 +8,6 @@
          {% csrf_token %}
          <div class="form-field"><label for="nome">Nome</label><input id="nome" name="nome" type="text" maxlength="30" required></div required>
          <div class="form-field"><label for="descricao">Descrição</label><input id="descricao" name="descricao" maxlength="100"></div required>
-         <div class="form-field"><label for="quantidade">Quantidade</label><input id="quantidade" type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '')" min="0" name="quantidade"></div required>
 
          <div class="form-field">
             <label for="categoria">Categoria</label>

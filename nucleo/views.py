@@ -82,13 +82,11 @@ def salvar_equipamento(req):
     if nome is None:
         return redirect('equipamentos-criar')
 
-    quantidade = req.POST.get('quantidade')
     categoria = req.POST.get('categoria')
     descricao = req.POST.get('descricao')
 
     TipoEquipamento.objects.create(
         nome=nome,
-        quantidade=quantidade,
         categoria=categoria,
         descricao=descricao
     )
@@ -103,7 +101,6 @@ def editar_equipamento(req, id):
         nome = req.POST.get('nome')
         if nome:
             equipamento.nome = nome
-            equipamento.quantidade = req.POST.get('quantidade')
             equipamento.descricao = req.POST.get('descricao')
             equipamento.categoria = req.POST.get('categoria')
 
