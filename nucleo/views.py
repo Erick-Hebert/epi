@@ -124,6 +124,8 @@ def excluir_equipamento(req, id):
         'equipamento': equipamento,
     })
 
+
+# ----- REGISTROS DE EQUIPAMENTOS -----
 def equipamentos_registros(req, id):
     equipamento = get_object_or_404(TipoEquipamento, id=id)
     equipamentos_registros = Equipamentos.objects.filter(tipo=id)
@@ -149,3 +151,5 @@ def excluir_equipamento_registro(req, id):
 
 def editar_equipamento_registro(req, id):
     pass
+
+# ----- REGISTROS DE EQUIPAMENTOS -----
