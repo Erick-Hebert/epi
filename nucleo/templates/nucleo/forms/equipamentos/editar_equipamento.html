@@ -1,0 +1,30 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Editar equipamento{% endblock %}
+{% block content %}
+<section class="content-card form-card">
+    <h1>Editar equipamento</h1>
+    <p class="description">Atualize os dados do equipamento.</p>
+    <form class="collaborator-form" action="{% url 'equipamentos-editar' equipamento.id %}" method="post">
+         {% csrf_token %}
+         <div class="form-field"><label for="nome">Nome</label><input id="nome" name="nome" value="{{ equipamento.nome }}" type="text" maxlength="30" required></div required>
+         <div class="form-field"><label for="descricao">Descrição</label><input id="descricao" name="descricao" value="{{ equipamento.descricao }}" maxlength="100"></div required>
+         <div class="form-field"><label for="quantidade">Quantidade</label><input id="quantidade" type="number" value="{{ equipamento.quantidade }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" min="0" name="quantidade"></div required>
+
+         <div class="form-field">
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria">
+               <option value="CABECA">Cabeça</option {% if equipamento.categoria == "CABECA" %}selected{% endif %}>
+               <option value="FACE">Face</option {% if equipamento.categoria == "FACE" %}selected{% endif %}>
+               <option value="AUDITIVO">Auditivo</option {% if equipamento.categoria == "AUDITIVO" %}selected{% endif %}>
+               <option value="RESPIRATORIO">Respiratório</option {% if equipamento.categoria == "RESPIRATORIO" %}selected{% endif %}>
+               <option value="TRONCO">Tronco</option {% if equipamento.categoria == "TRONCO" %}selected{% endif %}>
+               <option value="MEMBROS_SUPERIORES">Membros superiores</option {% if equipamento.categoria == "MEMBROS_SUPERIORES" %}selected{% endif %}>
+               <option value="MEMBROS_INFERIORES">Membros inferiores</option {% if equipamento.categoria == "MEMBROS_INFERIORES" %}selected{% endif %}>
+               <option value="QUEDAS">Quedas</option>
+            </select required>
+         </div>
+
+        <div class="form-actions"><a class="button button-secondary" href="{% url 'equipamentos-inicial' %}">Cancelar</a><button class="button button-primary" type="submit">Salvar alterações</button></div>
+    </form>
+</section>
+{% endblock %}

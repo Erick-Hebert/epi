@@ -13,14 +13,14 @@
 
     <div class="table-scroll">
         <table class="collaborator-table">
-            <thead><tr><th>ID</th><th>Nome</th><th>Quantidade</th><th>Categoria</th><th>Descrição</th></tr></thead>
+            <thead><tr><th>ID</th><th>Nome</th><th>Quantidade</th><th>Categoria</th><th>Descrição</th><th>Ação</th></tr></thead>
             <tbody>
                 {% for equipamento in tipos_equipamento %}
                 <tr>
                     <td>{{ equipamento.id }}</td>
                     <td>{{ equipamento.nome }}</td>
                     <td>{{ equipamento.quantidade }}</td>
-                    <td>{{ equipamento.categoria }}</td>
+                    <td>{{ equipamento.get_categoria_display }}</td>
                     <td>{{ equipamento.descricao }}</td>
                     <td class="table-actions"><a class="button button-delete" href="{% url 'equipamentos-excluir' equipamento.id %}">Deletar</a><a class="button button-edit" href="{% url 'equipamentos-editar' equipamento.id %}">Editar</a></td>
                 </tr>

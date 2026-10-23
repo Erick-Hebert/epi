@@ -97,7 +97,23 @@ def salvar_equipamento(req):
     return redirect('equipamentos-inicial')
 
 def editar_equipamento(req, id):
-    return render(req, 'nucleo/forms/equipamentos/editar_equipamento.html')
+    equipamento = get_object_or_404(TipoEquipamento, id=id)
+    
+    if req.method == 'POST':
+        nome = req.POST.get('nome')
+        if nome:
+            equipamento.nome = nome
+            equipamento.quantidade = req.POST.get('quantidade')
+            equipamento.descricao = req.POST.get('descricao')
+            equipamento.categoria = req.POST.get('categoria')
+
+            equipamento.save()
+            messages.success(req, "Editado com sucesso!")
+            return redirect('equipamentos-inicial')
+
+    return render(req, 'nucleo/forms/equipamentos/editar_equipamento.html', {
+        'equipamento': equipamento,
+    })
 
 def excluir_equipamento(req, id):
     equipamento = get_object_or_404(TipoEquipamento, id=id)
