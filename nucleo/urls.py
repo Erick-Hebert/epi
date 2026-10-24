@@ -34,16 +34,15 @@ urlpatterns = [
     path('equipamentos/salvar', views.salvar_equipamento, name='equipamentos-salvar'),
     path('equipamentos/editar/<int:id>', views.editar_equipamento, name='equipamentos-editar'),
     path('equipamentos/excluir/<int:id>', views.excluir_equipamento, name='equipamentos-excluir'),
-path('equipamentos/salvar', views.salvar_equipamento, name='equipamentos-salvar'),
-    path('equipamentos/editar/<int:id>', views.editar_equipamento, name='equipamentos-editar'),
-    path('equipamentos/excluir/<int:id>', views.excluir_equipamento, name='equipamentos-excluir'),
+    
     path('equipamentos/registros/<int:id>', views.equipamentos_registros, name='equipamentos-registros-inicial'),
-    path('equipamentos/registros/criar<int:id>', views.criar_equipamento_registro, name='equipamentos-registros-criar'),
-    path('equipamentos/registros/salvar<int:id>', views.salvar_equipamento_registro, name='equipamentos-registros-salvar'),
-    path('equipamentos/registros/editar<int:id>', views.editar_equipamento_registro, name='equipamentos-registros-editar'),
-    path('equipamentos/registros/excluir<int:id>', views.excluir_equipamento_registro, name='equipamentos-registros-excluir'),
+    path('equipamentos/registros/criar/<int:id>', views.criar_equipamento_registro, name='equipamentos-registros-criar'),
+    path('equipamentos/registros/salvar/<int:id>', views.salvar_equipamento_registro, name='equipamentos-registros-salvar'),
+    path('equipamentos/registros/editar/<int:id>', views.editar_equipamento_registro, name='equipamentos-registros-editar'),
+    path('equipamentos/registros/excluir/<int:id>', views.excluir_equipamento_registro, name='equipamentos-registros-excluir'),
 
     path('emprestimos', views.emprestimos, name='emprestimo-inicial'),
     path('emprestimo/criar', views.criar_emprestimo, name='emprestimo-criar'),
+    path('emprestimo/salvar', views.salvar_emprestimo, name='emprestimo-salvar'),
     path('emprestimos/editar/<int:id>', views.editar_emprestimo, name='emprestimo-editar'),
 ]

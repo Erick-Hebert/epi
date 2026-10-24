@@ -1,0 +1,189 @@
+{% extends 'nucleo/base.html' %}
+{% load static %}
+
+{% block title %}Criar Empréstimo{% endblock %}
+
+{% block content %}
+
+<div class="container-emprestimo">
+
+    <div class="cabecalho-emprestimo">
+        <h1>Criar Empréstimo</h1>
+        <p>Preencha os dados para registrar um novo empréstimo de EPI.</p>
+    </div>
+
+    <form method="POST" action="{% url 'emprestimo-editar' emprestimo.id %}" class="form-emprestimo">
+        {% csrf_token %}
+
+        <!-- Equipamento -->
+        <div class="campo">
+            <label for="equipamento">Equipamento</label>
+
+            <select id="equipamento" name="equipamento" required>
+                <option value="">Selecione um equipamento</option>
+
+                {% for e in equipamentos %}
+                    <option {% if e.id == emprestimo.equipamento.id %}selected{% endif %}
+                    value="{{ e.id }}">
+                        {{ e.tipo.nome }} - {{ e.codigo_patrimonio }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Colaborador -->
+        <div class="campo">
+            <label for="colaborador">Colaborador</label>
+
+            <select id="colaborador" name="colaborador" required>
+                <option value="">Selecione um colaborador</option>
+
+                {% for c in colaboradores %}
+                    <option {% if c.id == emprestimo.colaborador.id %}selected{% endif %}
+                        value="{{ c.id }}">
+                        {{ c.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Data do empréstimo -->
+        <div class="campo">
+            <label for="data_emprestimo">Data do empréstimo</label>
+
+            <input
+                type="date"
+                id="data_emprestimo"
+                name="data_emprestimo"
+                value="{{ emprestimo.data_emprestimo|date:'Y-m-d' }}"
+                required
+            >
+        </div>
+
+        <!-- Data prevista -->
+        <div class="campo">
+            <label for="data_devolucao_prevista">
+                Data prevista para devolução
+            </label>
+
+            <input
+                type="date"
+                id="data_devolucao_prevista"
+                name="data_devolucao_prevista"
+                value="{{ emprestimo.data_devolucao_prevista|date:'Y-m-d' }}"
+                required
+            >
+        </div>
+
+        <!-- Estado do equipamento -->
+        <div class="campo">
+            <label for="estado_equipamento">Estado do empréstimo</label>
+
+            <select
+                id="estado_equipamento"
+                name="estado_equipamento"
+                required
+            >
+                    
+                <option value="EMPRESTADO" {% if emprestimo.estado_equipamento == 'EMPRESTADO' %}selected{% endif %}>Emprestado</option>
+                <option value="FORNECIDO" {% if emprestimo.estado_equipamento == 'FORNECIDO' %}selected{% endif %}>Fornecido</option>
+                <option value="DEVOLVIDO" {% if emprestimo.estado_equipamento == 'DEVOLVIDO' %}selected{% endif %}>Devolvido</option>
+                <option value="DANIFICADO" {% if emprestimo.estado_equipamento == 'DANIFICADO' %}selected{% endif %}>Danificado</option>
+                <option value="PERDIDO" {% if emprestimo.estado_equipamento == 'PERDIDO' %}selected{% endif %}>Perdido</option>
+            </select>
+        </div>
+
+        <!-- Campos exibidos conforme o estado -->
+        <div id="campos-finais" hidden>
+
+            <div class="campo">
+                <label for="condicao_equipamento">
+                    Condição do equipamento
+                </label>
+
+                <input
+                    type="text"
+                    id="condicao_equipamento"
+                    name="condicao_equipamento"
+                    value="{{ emprestimo.condicao_equipamento }}"
+                    maxlength="30"
+                    placeholder="Informe a condição do equipamento"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="data_devolucao">Data da devolução</label>
+
+                <input
+                    type="date"
+                    id="data_devolucao"
+                    value="{{ emprestimo.data_devolucao|date:'Y-m-d'|default:'' }}"
+                    name="data_devolucao"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="observacao">Observações</label>
+
+                <textarea
+                    id="observacao"
+                    name="observacao"
+                    rows="4"
+                    maxlength="30"
+                    value="{{ emprestimo.condicao_equipamento|default:"" }}"
+                    placeholder="Digite uma observação (opcional)"
+                ></textarea>
+            </div>
+
+        </div>
+
+        <!-- Botões -->
+        <div class="acoes-formulario">
+            <button type="submit" class="botao-salvar">
+                Editar empréstimo
+            </button>
+
+            <a
+                href="{% url 'emprestimo-inicial' %}"
+                class="botao-voltar"
+            >
+                Voltar
+            </a>
+        </div>
+
+    </form>
+</div>
+
+<!-- Controle de exibição dos campos -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const estado = document.getElementById('estado_equipamento');
+    const camposFinais = document.getElementById('campos-finais');
+    const condicao = document.getElementById('condicao_equipamento');
+    const dataDevolucao = document.getElementById('data_devolucao');
+
+    function atualizarCampos() {
+        const mostrar = [
+            'DEVOLVIDO',
+            'DANIFICADO',
+            'PERDIDO'
+        ].includes(estado.value);
+
+        camposFinais.hidden = !mostrar;
+
+        condicao.required = mostrar;
+        dataDevolucao.required = mostrar;
+
+        if (!mostrar) {
+            condicao.value = '';
+            dataDevolucao.value = '';
+        }
+    }
+
+    estado.addEventListener('change', atualizarCampos);
+
+    atualizarCampos();
+});
+</script>
+
+{% endblock %}

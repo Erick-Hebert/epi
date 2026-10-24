@@ -1,14 +1,15 @@
 <table class="collaborator-table">
     <thead>
-        <tr><th>Colaborador</th><th>Equipamento</th><th>Devolução Prevista</th><th>Ação</th></tr>
+        <tr><th>ID</th><th>Colaborador</th><th>Equipamento</th><th>Devolução Prevista</th><th>Ação</th></tr>
     </thead>
     <tbody>
         {% for em in emprestimo %}
         <tr>
+            <td>{{ em.id }}</td>
             <td>{{ em.colaborador.nome }}</td>
             <td>{{ em.equipamento.tipo.nome }}</td>
             <td>{{ em.data_devolucao_prevista }}</td>
-            <td><a class="button button-edit" href="{% url 'editar-emprestimo' em.id %}">Editar</a></td>
+            <td><a class="button button-edit" href="{% url 'emprestimo-editar' em.id %}">Editar</a></td>
         </tr>
         {% empty %}
         <tr><td colspan="4">Nenhum empréstimo encontrado.</td></tr>

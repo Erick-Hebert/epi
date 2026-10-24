@@ -12,7 +12,7 @@
         <p>Preencha os dados para registrar um novo empréstimo de EPI.</p>
     </div>
 
-    <form method="POST" class="form-emprestimo">
+    <form method="POST" action="{% url 'emprestimo-salvar' %}" class="form-emprestimo">
         {% csrf_token %}
 
         <!-- Equipamento -->
@@ -71,7 +71,7 @@
             >
         </div>
 
-        <!-- Estado do empréstimo -->
+        <!-- Estado do equipamento -->
         <div class="campo">
             <label for="estado_equipamento">Estado do empréstimo</label>
 
