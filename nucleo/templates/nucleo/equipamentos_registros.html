@@ -9,7 +9,7 @@
     
     <div class="toolbar">
         <form class="search-form" method="get" action="{% url 'equipamentos-registros-inicial' tipos_equipamento.id %}">
-            <input type="search" name="pesquisa" value="{{ pesquisa }}" placeholder="Pesquisar pelo nome" aria-label="Pesquisar pelo nome">
+            <input type="search" name="pesquisa" value="{{ pesquisa }}" placeholder="Pesquisar pelo código de patrimônio" aria-label="Pesquisar pelo código de patrimônio">
             <button class="search-button" type="submit" aria-label="Pesquisar">⌕</button>
         </form>
         <a class="button button-create" href="{% url 'equipamentos-registros-criar' tipos_equipamento.id %}">+ CRIAR</a>
@@ -20,14 +20,14 @@
             <thead><tr><th>ID</th><th>Código de Patrimônio</th><th>Situação</th><th>Ação</th></tr></thead>
             <tbody>
                 {% for registros in equipamentos_registros %}
-                <tr class="row-button" data-id="{{ equipamento.id }}">
+                <tr >
                     <td>{{ registros.id }}</td>
                     <td>{{ registros.codigo_patrimonio }}</td>
-                    <td>{{ registros.get_situacao_display }}</td>
-                    <td class="table-actions"><a class="button button-delete" href="{% url 'equipamentos-registros-excluir' registro.id %}">Deletar</a><a class="button button-edit" href="{% url 'equipamentos-registros-editar' registro.id %}">Editar</a></td>
+                    <td><span class="status-badge status-{{ registros.situacao|lower }}">{{ registros.get_situacao_display }}</span></td>
+                    <td class="table-actions"><a class="button button-delete" href="{% url 'equipamentos-registros-excluir' registros.id %}">Deletar</a><a class="button button-edit" href="{% url 'equipamentos-registros-editar' registros.id %}">Editar</a></td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="5" class="empty-state">Nenhum equipamento encontrado.</td></tr>
+                <tr><td colspan="4" class="empty-state">Nenhum equipamento encontrado.</td></tr>
                 {% endfor %}
             </tbody>
         </table>

@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from nucleo.models import Colaborador, Equipamentos, TipoEquipamento, Emprestimo
 from django.contrib import messages
+from django.db.models.deletion import ProtectedError
+from django.views.decorators.http import require_POST
+from nucleo.forms import EquipamentoRegistroForm
 
 def home(req):
     pesquisa = req.GET.get('pesquisa', '').strip()
@@ -61,13 +64,6 @@ def excluir(req, id):
 
 # TERMINAR
 def equipamentos(req):
-    tipo_oculos = TipoEquipamento.objects.get(id=4)
-
-    Equipamentos.objects.create(
-        codigo_patrimonio='1201023',
-        situacao='DISPONIVEL',
-        tipo=tipo_oculos
-    )
 
     pesquisa = req.GET.get('pesquisa', '').strip()
     tipos_equipamento = TipoEquipamento.objects.all()
@@ -270,15 +266,48 @@ def equipamentos_registros(req, id):
     })
 
 def criar_equipamento_registro(req, id):
-    pass
+    tipo = get_object_or_404(TipoEquipamento, id=id)
+    return render(req, 'nucleo/forms/equipamentos_registros/criar.html', {
+        'tipos_equipamento': tipo, 'form': EquipamentoRegistroForm(),
+    })
 
+
+@require_POST
 def salvar_equipamento_registro(req, id):
-    pass
+    tipo = get_object_or_404(TipoEquipamento, id=id)
+    form = EquipamentoRegistroForm(req.POST)
+    if form.is_valid():
+        registro = form.save(commit=False)
+        registro.tipo = tipo
+        registro.save()
+        messages.success(req, 'Registro cadastrado com sucesso!')
+        return redirect('equipamentos-registros-inicial', id=tipo.id)
+    return render(req, 'nucleo/forms/equipamentos_registros/criar.html', {
+        'tipos_equipamento': tipo, 'form': form,
+    })
 
-def excluir_equipamento_registro(req, id):
-    pass
 
 def editar_equipamento_registro(req, id):
-    pass
+    registro = get_object_or_404(Equipamentos.objects.select_related('tipo'), id=id)
+    form = EquipamentoRegistroForm(req.POST if req.method == 'POST' else None, instance=registro)
+    if req.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(req, 'Registro atualizado com sucesso!')
+        return redirect('equipamentos-registros-inicial', id=registro.tipo_id)
+    return render(req, 'nucleo/forms/equipamentos_registros/editar.html', {
+        'registro': registro, 'form': form,
+    })
 
-# ----- REGISTROS DE EQUIPAMENTOS -----
+
+def excluir_equipamento_registro(req, id):
+    registro = get_object_or_404(Equipamentos.objects.select_related('tipo'), id=id)
+    if req.method == 'POST':
+        tipo_id = registro.tipo_id
+        try:
+            registro.delete()
+        except ProtectedError:
+            messages.error(req, 'Este equipamento possui empréstimos vinculados e não pode ser excluído.')
+        else:
+            messages.success(req, 'Registro excluído com sucesso!')
+        return redirect('equipamentos-registros-inicial', id=tipo_id)
+    return render(req, 'nucleo/forms/equipamentos_registros/excluir.html', {'registro': registro})

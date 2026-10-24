@@ -12,3 +12,9 @@ Em seguida, instale as dependências usando ```pip install -r requirements.txt``
 
 
 Por fim, basta copiar o link http://127.0.0.1:8000/ que aparece no terminal, colar no seu navegador e pressionar Ctrl + C quando quiser desligar o servidor.
+
+
+## Registros de equipamentos
+Na lista de equipamentos, clique no nome para acessar as unidades. Use CRIAR para cadastrar o código de patrimônio e a situação. A tabela permite pesquisar por patrimônio, editar e confirmar a exclusão. Códigos repetidos são rejeitados; unidades com empréstimos vinculados são preservadas.
+
+Para executar os testes desse fluxo: `python manage.py test nucleo.tests`.

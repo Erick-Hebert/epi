@@ -2,8 +2,8 @@
     <nav class="sidebar-menu">
         <div class="menu-group">
             <h2>Cadastros</h2>
-            <a href="{% url 'nucleo-inicial' %}" class="menu-link active">Colaborador</a>
-            <a href="{% url 'equipamentos-inicial' %}" class="menu-link">Equipamentos</a>
+            <a href="{% url 'nucleo-inicial' %}" class="menu-link{% if 'colaborator' in request.path %} active{% endif %}">Colaborador</a>
+            <a href="{% url 'equipamentos-inicial' %}" class="menu-link{% if 'equipamentos' in request.path %} active{% endif %}">Equipamentos</a>
         </div>
 
         <div class="menu-group">

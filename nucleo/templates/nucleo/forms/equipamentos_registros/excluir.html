@@ -1,0 +1,20 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Excluir registro de equipamento{% endblock %}
+{% block content %}
+<section class="content-card form-card">
+    <h1>Excluir registro de equipamento</h1>
+    <p class="description">Tem certeza de que deseja excluir esta unidade? Esta ação não pode ser desfeita.</p>
+    <div class="delete-summary">
+        <strong>{{ registro.tipo.nome }}</strong>
+        <span>Código de patrimônio: {{ registro.codigo_patrimonio }}</span>
+        <span>Situação: {{ registro.get_situacao_display }}</span>
+    </div>
+    <form method="post" action="{% url 'equipamentos-registros-excluir' registro.id %}">
+        {% csrf_token %}
+        <div class="form-actions">
+            <a class="button button-secondary" href="{% url 'equipamentos-registros-inicial' registro.tipo_id %}">Cancelar</a>
+            <button class="button button-danger" type="submit">Confirmar exclusão</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

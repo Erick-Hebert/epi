@@ -1,0 +1,16 @@
+{% extends 'nucleo/base.html' %}
+{% block title %}Editar registro de equipamento{% endblock %}
+{% block content %}
+<section class="content-card form-card">
+    <h1>Editar registro de equipamento</h1>
+    <p class="description">Informe o patrimônio e a situação da unidade de <strong>{{ registro.tipo.nome }}</strong>.</p>
+    <form class="collaborator-form" action="{% url 'equipamentos-registros-editar' registro.id %}" method="post">
+        {% csrf_token %}
+        {% include 'nucleo/forms/equipamentos_registros/campos.html' %}
+        <div class="form-actions">
+            <a class="button button-secondary" href="{% url 'equipamentos-registros-inicial' registro.tipo.id %}">Cancelar</a>
+            <button class="button button-primary" type="submit">Salvar</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
