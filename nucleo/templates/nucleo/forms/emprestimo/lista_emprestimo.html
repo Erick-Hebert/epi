@@ -1,6 +1,6 @@
 <table class="collaborator-table">
     <thead>
-        <tr><th>ID</th><th>Colaborador</th><th>Equipamento</th><th>Devolução Prevista</th><th>Ação</th></tr>
+        <tr><th>ID</th><th>Colaborador</th><th>Equipamento</th><th>Devolução Prevista</th>{% if perms.nucleo.change_emprestimo %}<th>Ação</th>{% endif %}</tr>
     </thead>
     <tbody>
         {% for em in emprestimo %}
@@ -9,7 +9,9 @@
             <td>{{ em.colaborador.nome }}</td>
             <td>{{ em.equipamento.tipo.nome }}</td>
             <td>{{ em.data_devolucao_prevista }}</td>
+            {% if perms.nucleo.change_emprestimo %}
             <td><a class="button button-edit" href="{% url 'emprestimo-editar' em.id %}">Editar</a></td>
+            {% endif %}
         </tr>
         {% empty %}
         <tr><td colspan="4">Nenhum empréstimo encontrado.</td></tr>
