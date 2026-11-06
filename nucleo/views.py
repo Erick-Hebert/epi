@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from nucleo.models import Colaborador, Equipamentos, TipoEquipamento, Emprestimo
-from django.contrib import messages
+from django.contrib import messages, admin 
 from django.db.models.deletion import ProtectedError
 from django.views.decorators.http import require_POST
 from nucleo.forms import EquipamentoRegistroForm
+from django.contrib.auth.decorators import permission_required
 
+@permission_required('nucleo.view_colaborador', raise_exception=True)
 def home(req):
     pesquisa = req.GET.get('pesquisa', '').strip()
     colaboradores = Colaborador.objects.all()
@@ -15,9 +17,11 @@ def home(req):
         'pesquisa': pesquisa,
     })
 
+@permission_required('nucleo.add_colaborador', raise_exception=True)
 def tela_criar(req):
     return render(req, 'nucleo/forms/criar.html')
 
+@permission_required('nucleo.add_colaborador', raise_exception=True)
 def salvar(req):
     nome = req.POST.get('nome')
 
@@ -33,7 +37,7 @@ def salvar(req):
     messages.success(req, "Cadastrado com sucesso!")
     return redirect('nucleo-inicial')
 
-
+@permission_required('nucleo.change_colaborador', raise_exception=True) 
 def editar(req, id):
     colaborador = get_object_or_404(Colaborador, id=id)
 
@@ -50,6 +54,7 @@ def editar(req, id):
         'colaborador': colaborador,
     })
 
+@permission_required('nucleo.delete_colaborador', raise_exception=True)
 def excluir(req, id):
     colaborador = get_object_or_404(Colaborador, id=id)
 
@@ -63,6 +68,7 @@ def excluir(req, id):
     })
 
 # TERMINAR
+@permission_required('nucleo.view_tipoequipamento', raise_exception=True)
 def equipamentos(req):
 
     pesquisa = req.GET.get('pesquisa', '').strip()
@@ -75,9 +81,11 @@ def equipamentos(req):
         'pesquisa': pesquisa,
     })
 
+@permission_required('nucleo.add_tipoequipamento', raise_exception=True)
 def criar_equipamento(req):
     return render(req, 'nucleo/forms/equipamentos/criar_equipamento.html')
 
+@permission_required('nucleo.add_tipoequipamento', raise_exception=True)
 def salvar_equipamento(req):
     nome = req.POST.get('nome')
 
@@ -96,6 +104,7 @@ def salvar_equipamento(req):
 
     return redirect('equipamentos-inicial')
 
+@permission_required('nucleo.change_tipoequipamento', raise_exception=True)
 def editar_equipamento(req, id):
     equipamento = get_object_or_404(TipoEquipamento, id=id)
     
@@ -114,6 +123,7 @@ def editar_equipamento(req, id):
         'equipamento': equipamento,
     })
 
+@permission_required('nucleo.delete_tipoequipamento', raise_exception=True)
 def excluir_equipamento(req, id):
     equipamento = get_object_or_404(TipoEquipamento, id=id)
     
@@ -126,11 +136,13 @@ def excluir_equipamento(req, id):
         'equipamento': equipamento,
     })
 
+@permission_required('nucleo.view_emprestimo', raise_exception=True)
 def emprestimos(req):
     lista = Emprestimo.objects.all()
 
     return render(req, 'nucleo/emprestimo.html', {'emprestimo' : lista,})
 
+@permission_required('nucleo.add_emprestimo', raise_exception=True)
 def criar_emprestimo(req):
     equipamentos = Equipamentos.objects.filter(situacao='DISPONIVEL')
     colaboradores = Colaborador.objects.all()
@@ -139,7 +151,8 @@ def criar_emprestimo(req):
         'equipamentos': equipamentos,
         'colaboradores': colaboradores,
     })
-    
+
+@permission_required('nucleo.add_emprestimo', raise_exception=True) 
 def salvar_emprestimo(request):
     if request.method == 'POST':
         equipamento_id = request.POST.get('equipamento')
@@ -199,6 +212,7 @@ def salvar_emprestimo(request):
         'equipamentos': equipamentos
     })
 
+@permission_required('nucleo.change_emprestimo', raise_exception=True)
 def editar_emprestimo(req, id):
     # 1. Busca o empréstimo que será editado (Funciona tanto no GET quanto no POST)
     emprestimo = get_object_or_404(Emprestimo, id=id)
@@ -251,6 +265,7 @@ def editar_emprestimo(req, id):
 
 
 # ----- REGISTROS DE EQUIPAMENTOS -----
+@permission_required('nucleo.view_equipamentos', raise_exception=True)
 def equipamentos_registros(req, id):
     equipamento = get_object_or_404(TipoEquipamento, id=id)
     equipamentos_registros = Equipamentos.objects.filter(tipo=id)
@@ -265,6 +280,7 @@ def equipamentos_registros(req, id):
         'pesquisa': pesquisa,
     })
 
+@permission_required('nucleo.add_equipamentos', raise_exception=True)
 def criar_equipamento_registro(req, id):
     tipo = get_object_or_404(TipoEquipamento, id=id)
     return render(req, 'nucleo/forms/equipamentos_registros/criar.html', {
@@ -272,6 +288,7 @@ def criar_equipamento_registro(req, id):
     })
 
 
+@permission_required('nucleo.add_equipamentos', raise_exception=True)
 @require_POST
 def salvar_equipamento_registro(req, id):
     tipo = get_object_or_404(TipoEquipamento, id=id)
@@ -287,6 +304,7 @@ def salvar_equipamento_registro(req, id):
     })
 
 
+@permission_required('nucleo.change_equipamentos', raise_exception=True)
 def editar_equipamento_registro(req, id):
     registro = get_object_or_404(Equipamentos.objects.select_related('tipo'), id=id)
     form = EquipamentoRegistroForm(req.POST if req.method == 'POST' else None, instance=registro)
@@ -298,7 +316,7 @@ def editar_equipamento_registro(req, id):
         'registro': registro, 'form': form,
     })
 
-
+@permission_required('nucleo.delete_equipamentos', raise_exception=True)
 def excluir_equipamento_registro(req, id):
     registro = get_object_or_404(Equipamentos.objects.select_related('tipo'), id=id)
     if req.method == 'POST':

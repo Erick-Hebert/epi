@@ -12,12 +12,14 @@
             <input type="search" name="pesquisa" value="{{ pesquisa }}" placeholder="Pesquisar pelo código de patrimônio" aria-label="Pesquisar pelo código de patrimônio">
             <button class="search-button" type="submit" aria-label="Pesquisar">⌕</button>
         </form>
-        <a class="button button-create" href="{% url 'equipamentos-registros-criar' tipos_equipamento.id %}">+ CRIAR</a>
+        {% if perms.nucleo.add_tipoequipamento %}
+            <a class="button button-create" href="{% url 'equipamentos-registros-criar' tipos_equipamento.id %}">+ CRIAR</a>
+        {% endif %}
     </div>
 
     <div class="table-scroll">
         <table class="collaborator-table">
-            <thead><tr><th>ID</th><th>Código de Patrimônio</th><th>Situação</th><th>Ação</th></tr></thead>
+            <thead><tr><th>ID</th><th>Código de Patrimônio</th><th>Situação</th>{% if perms.nucleo.add_tipoequipamento %}<th>Ação</th>{% endif %}</tr></thead>
             <tbody>
                 {% for registros in equipamentos_registros %}
                 <tr >
