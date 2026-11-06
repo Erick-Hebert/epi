@@ -16,33 +16,34 @@ Including another URLconf
 """
 from . import views
 
+from django.contrib.auth.decorators import login_required
 from django.views.generic import RedirectView
 from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='colaborators')),
+    path('', login_required(RedirectView.as_view(url='colaborators')), name='home'),
 
-    path('colaborators', views.home, name='nucleo-inicial'),
-    path('colaborator/criar', views.tela_criar, name='nucleo-criar'),
-    path('colaborator/salvar', views.salvar, name='nucleo-salvar'),
-    path('colaborator/editar/<int:id>', views.editar, name='nucleo-editar'),
-    path('colaborator/excluir/<int:id>', views.excluir, name='nucleo-excluir'),
+    path('colaborators', login_required(views.home), name='nucleo-inicial'),
+    path('colaborator/criar', login_required(views.tela_criar), name='nucleo-criar'),
+    path('colaborator/salvar', login_required(views.salvar), name='nucleo-salvar'),
+    path('colaborator/editar/<int:id>', login_required(views.editar), name='nucleo-editar'),
+    path('colaborator/excluir/<int:id>', login_required(views.excluir), name='nucleo-excluir'),
 
-    path('equipamentos', views.equipamentos, name='equipamentos-inicial'),
-    path('equipamentos/criar', views.criar_equipamento, name='equipamentos-criar'),
-    path('equipamentos/salvar', views.salvar_equipamento, name='equipamentos-salvar'),
-    path('equipamentos/editar/<int:id>', views.editar_equipamento, name='equipamentos-editar'),
-    path('equipamentos/excluir/<int:id>', views.excluir_equipamento, name='equipamentos-excluir'),
+    path('equipamentos', login_required(views.equipamentos), name='equipamentos-inicial'),
+    path('equipamentos/criar', login_required(views.criar_equipamento), name='equipamentos-criar'),
+    path('equipamentos/salvar', login_required(views.salvar_equipamento), name='equipamentos-salvar'),
+    path('equipamentos/editar/<int:id>', login_required(views.editar_equipamento), name='equipamentos-editar'),
+    path('equipamentos/excluir/<int:id>', login_required(views.excluir_equipamento), name='equipamentos-excluir'),
     
-    path('equipamentos/registros/<int:id>', views.equipamentos_registros, name='equipamentos-registros-inicial'),
-    path('equipamentos/registros/criar/<int:id>', views.criar_equipamento_registro, name='equipamentos-registros-criar'),
-    path('equipamentos/registros/salvar/<int:id>', views.salvar_equipamento_registro, name='equipamentos-registros-salvar'),
-    path('equipamentos/registros/editar/<int:id>', views.editar_equipamento_registro, name='equipamentos-registros-editar'),
-    path('equipamentos/registros/excluir/<int:id>', views.excluir_equipamento_registro, name='equipamentos-registros-excluir'),
+    path('equipamentos/registros/<int:id>', login_required(views.equipamentos_registros), name='equipamentos-registros-inicial'),
+    path('equipamentos/registros/criar/<int:id>', login_required(views.criar_equipamento_registro), name='equipamentos-registros-criar'),
+    path('equipamentos/registros/salvar/<int:id>', login_required(views.salvar_equipamento_registro), name='equipamentos-registros-salvar'),
+    path('equipamentos/registros/editar/<int:id>', login_required(views.editar_equipamento_registro), name='equipamentos-registros-editar'),
+    path('equipamentos/registros/excluir/<int:id>', login_required(views.excluir_equipamento_registro), name='equipamentos-registros-excluir'),
 
-    path('emprestimos', views.emprestimos, name='emprestimo-inicial'),
-    path('emprestimo/criar', views.criar_emprestimo, name='emprestimo-criar'),
-    path('emprestimo/salvar', views.salvar_emprestimo, name='emprestimo-salvar'),
-    path('emprestimos/editar/<int:id>', views.editar_emprestimo, name='emprestimo-editar'),
+    path('emprestimos', login_required(views.emprestimos), name='emprestimo-inicial'),
+    path('emprestimo/criar', login_required(views.criar_emprestimo), name='emprestimo-criar'),
+    path('emprestimo/salvar', login_required(views.salvar_emprestimo), name='emprestimo-salvar'),
+    path('emprestimos/editar/<int:id>', login_required(views.editar_emprestimo), name='emprestimo-editar'),
 ]

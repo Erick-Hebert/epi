@@ -1,5 +1,25 @@
 {% load static %}
+
+<style>
+    .logout-button {
+        cursor: pointer;
+        background-color: rgb(245, 84, 84);
+        color: white;
+        border: none;
+        border-radius: 9999999px;
+        padding: 5px 15px;
+    }
+</style>
+
 <header class="site-header">
     <a class="site-title" href="{% url 'nucleo-inicial' %}">Home</a>
-    <div class="profile"><span>João Silva</span><img src="{% static 'imgs/user-icon.svg' %}" alt="Ícone de usuário"></div>
+    <div class="profile">
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="logout-button" type="submit">Sair</button>
+        </form>
+
+        <span>João Silva</span>
+        <img src="{% static 'imgs/user-icon.svg' %}" alt="Ícone de usuário">
+    </div>
 </header>

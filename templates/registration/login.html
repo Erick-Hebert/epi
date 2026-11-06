@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar | Controle de EPI</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body class="login-page">
+    <main class="login-main">
+        <section class="login-card" aria-labelledby="login-title">
+            <a class="login-brand" href="#" aria-label="Controle de EPI">
+                <span>Controle de EPI</span>
+            </a>
+            <h1 id="login-title">Bem-vindo de volta</h1>
+            <p class="login-description">Entre com seus dados para acessar o sistema.</p>
+
+            <form class="login-form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="button button-primary login-submit" type="submit">Entrar</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

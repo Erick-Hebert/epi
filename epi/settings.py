@@ -55,7 +55,9 @@ ROOT_URLCONF = 'epi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], 
+        # ----- ADICIONADO POR JOSUÉ -----
+        'DIRS': [BASE_DIR / 'templates'],
+        # --------------------------------
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,3 +131,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ADICIONADOS POR JOSUÉ
+LOGIN_URL= 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+REDIRECT_FIELD_NAME = 'next'
